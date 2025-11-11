@@ -168,6 +168,11 @@
             transform: translateY(-1px);
         }
         
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
         .back-link {
             margin-top: 30px;
             font-size: 14px;
@@ -178,6 +183,26 @@
         
         .back-link:hover {
             color: #8a2be2;
+        }
+        
+        .status-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .status-message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            color: #4caf50;
+        }
+        
+        .status-message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
         }
         
         @keyframes fadeIn {
@@ -295,9 +320,11 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="submit-button">
+                <button type="submit" class="submit-button" id="submitBtn">
                     Submit
                 </button>
+                
+                <div class="status-message" id="statusMessage"></div>
             </form>
         </div>
         
@@ -305,23 +332,54 @@
     </div>
     
     <script>
-        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxlayMgU_WdXhmAaipuAXbV5ZpR1kqST5p1FxIHUQb5evniKL2_bKq0_4CAWo3RsO9N/exec';
+        const form = document.getElementById('waitlistForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const formData = new FormData(this);
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
             
-            fetch('https://script.google.com/macros/s/AKfycbxlayMgU_WdXhmAaipuAXbV5ZpR1kqST5p1FxIHUQb5evniKL2_bKq0_4CAWo3RsO9N/exec', {
+            // Hide previous messages
+            statusMessage.style.display = 'none';
+            
+            // Get form data
+            const formData = new FormData(form);
+            
+            // Send to Google Apps Script
+            fetch(scriptURL, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                mode: 'no-cors' // Important for Google Apps Script
             })
-            .then(response => response.json())
-            .then(data => {
-                alert('Thank you for joining! Your information has been submitted successfully.');
-                this.reset();
+            .then(() => {
+                // Show success message
+                statusMessage.textContent = '✓ Thank you for joining! Your information has been submitted successfully.';
+                statusMessage.className = 'status-message success';
+                statusMessage.style.display = 'block';
+                
+                // Reset form
+                form.reset();
+                
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit';
             })
             .catch(error => {
-                alert('Thank you for joining! Your information has been submitted successfully.');
-                this.reset();
+                console.error('Error:', error);
+                
+                // Show error message
+                statusMessage.textContent = '✗ There was an error submitting your information. Please try again.';
+                statusMessage.className = 'status-message error';
+                statusMessage.style.display = 'block';
+                
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit';
             });
         });
     </script>
