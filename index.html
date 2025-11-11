@@ -79,8 +79,38 @@
             font-weight: 700;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             animation: fadeIn 1.7s ease-out;
+        }
+        
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            animation: fadeIn 1.9s ease-out;
+        }
+        
+        .countdown-item {
+            text-align: center;
+        }
+        
+        .countdown-number {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8a2be2 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .countdown-label {
+            font-size: 12px;
+            color: #808080;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
         .headline {
@@ -249,6 +279,18 @@
                 font-size: 16px;
             }
             
+            .countdown-container {
+                gap: 15px;
+            }
+            
+            .countdown-number {
+                font-size: 32px;
+            }
+            
+            .countdown-label {
+                font-size: 10px;
+            }
+            
             .metrics-strip {
                 gap: 30px;
             }
@@ -270,6 +312,25 @@
             <div class="logo-text">MARIAH AI</div>
             <div class="tagline">POWERED BY MARIAH</div>
             <div class="launch-date">Coming January 2026</div>
+            
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
         </div>
         
         <h1 class="headline">Transforming Crypto Trading Through Artificial Intelligence</h1>
@@ -319,5 +380,37 @@
             Limited Spots Available
         </p>
     </div>
+    
+    <script>
+        // Set the launch date to January 1, 2026
+        const launchDate = new Date('January 1, 2026 00:00:00').getTime();
+        
+        // Update the countdown every second
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+            
+            // Calculate time units
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display the countdown
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            // If countdown is finished
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
