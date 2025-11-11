@@ -239,7 +239,8 @@
             }
             
             .features-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
             
             .step {
@@ -251,7 +252,16 @@
             }
             
             .benefits-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .benefit-card {
+                padding: 20px;
             }
         }
     </style>
@@ -335,7 +345,7 @@
         
         <div class="video-container" style="max-width: 900px; margin: 0 auto 60px auto;">
             <div class="video-wrapper" style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(138, 43, 226, 0.6); border: 3px solid #8a2be2;">
-                <video controls style="width: 100%; height: auto; display: block;">
+                <video controls autoplay muted loop playsinline style="width: 100%; height: auto; display: block;">
                     <source src="./demo-video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
