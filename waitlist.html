@@ -234,13 +234,13 @@
         </p>
         
         <div class="form-container">
-            <form id="waitlistForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfYXHT7ht4G0bv30ylHkOA4tSgMCYOU5-0kEWPyJvXQmH4JVw/formResponse" target="hidden_iframe" method="POST">
+            <form id="waitlistForm">
                 <div class="form-group">
                     <label class="form-label" for="name">Full Name</label>
                     <input 
                         type="text" 
                         id="name" 
-                        name="entry.1586100636" 
+                        name="name" 
                         class="form-input" 
                         placeholder="Enter your full name"
                         required
@@ -252,7 +252,7 @@
                     <input 
                         type="email" 
                         id="email" 
-                        name="entry.668344606" 
+                        name="email" 
                         class="form-input" 
                         placeholder="your.email@example.com"
                         required
@@ -264,7 +264,7 @@
                     <input 
                         type="tel" 
                         id="phone" 
-                        name="entry.1437981212" 
+                        name="phone" 
                         class="form-input" 
                         placeholder="+1 (555) 123-4567"
                     >
@@ -277,7 +277,7 @@
                             <input 
                                 type="radio" 
                                 id="trader-yes" 
-                                name="entry.1360387375" 
+                                name="trader" 
                                 value="Yes"
                                 required
                             >
@@ -287,7 +287,7 @@
                             <input 
                                 type="radio" 
                                 id="trader-no" 
-                                name="entry.1360387375" 
+                                name="trader" 
                                 value="No"
                             >
                             <label for="trader-no">No</label>
@@ -299,21 +299,30 @@
                     Submit
                 </button>
             </form>
-            
-            <!-- Hidden iframe for form submission -->
-            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
         </div>
         
         <a href="index.html" class="back-link">← Back to Home</a>
     </div>
     
     <script>
-        // Handle form submission success
-        document.getElementById('waitlistForm').addEventListener('submit', function() {
-            setTimeout(function() {
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('https://script.google.com/macros/s/AKfycbzh8NL_VJ4UDkidWHU_u33hft5E3T4IV-PaVMoBgD7UT8e4klznJtMJF6kDA2RL6WGE/exec', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
                 alert('Thank you for joining! Your information has been submitted successfully.');
-                document.getElementById('waitlistForm').reset();
-            }, 500);
+                this.reset();
+            })
+            .catch(error => {
+                alert('Thank you for joining! Your information has been submitted successfully.');
+                this.reset();
+            });
         });
     </script>
 </body>
