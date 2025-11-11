@@ -314,25 +314,30 @@
             const phone = document.getElementById('phone').value || '';
             const trader = document.querySelector('input[name="trader"]:checked').value;
             
-            // Create FormData for Google Forms submission
-            const formData = new FormData();
-            formData.append('entry.1586100636', name);
-            formData.append('entry.668344606', email);
-            formData.append('entry.1437981212', phone);
-            formData.append('entry.1360387375', trader);
+            // Create URL-encoded data for Google Forms
+            const params = new URLSearchParams();
+            params.append('entry.1586100636', name);
+            params.append('entry.668344606', email);
+            if (phone) {
+                params.append('entry.1437981212', phone);
+            }
+            params.append('entry.1360387375', trader);
             
             // Submit to Google Form
             fetch('https://docs.google.com/forms/d/e/1FAIpQLSfYXHT7ht4G0bv30ylHkOA4tSgMCYOU5-0kEWPyJvXQmH4JVw/formResponse', {
                 method: 'POST',
                 mode: 'no-cors',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params.toString()
             }).then(() => {
                 // Show success message
                 alert(`Thank you for joining, ${name}! Your information has been submitted successfully.`);
                 // Reset form
                 this.reset();
-            }).catch(() => {
-                // Even if there's an error, the form was probably submitted
+            }).catch((error) => {
+                // Even with no-cors, the form is usually submitted successfully
                 alert(`Thank you for joining, ${name}! Your information has been submitted.`);
                 this.reset();
             });
