@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Tour — Mariah AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f0f1e;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 15, 30, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8a2be2 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #8a2be2;
+        }
+        
+        .section {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #8a2be2 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: #b0b0b0;
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background: rgba(26, 26, 46, 0.6);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: #8a2be2;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 15px;
+        }
+        
+        .feature-description {
+            font-size: 16px;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .step {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: #8a2be2;
+            min-width: 80px;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+        
+        .step-description {
+            font-size: 18px;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .benefit-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(26, 26, 46, 0.4);
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+        
+        .benefit-stat {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff 0%, #8a2be2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .benefit-label {
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .benefit-description {
+            font-size: 14px;
+            color: #808080;
+            line-height: 1.5;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: radial-gradient(ellipse at center, rgba(138, 43, 226, 0.2) 0%, rgba(15, 15, 30, 1) 70%);
+        }
+        
+        .cta-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .cta-subtitle {
+            font-size: 20px;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(135deg, #8a2be2 0%, #00d4ff 100%);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(138, 43, 226, 0.5);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(138, 43, 226, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                font-size: 36px;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="logo">MARIAH AI</div>
+        <a href="index.html" class="nav-link">← Back to Home</a>
+    </nav>
+    
+    <!-- Platform Features Section -->
+    <section class="section">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <img src="mx1-coin.png" alt="MX1" style="width: 250px; height: 250px;">
+        </div>
+        
+        <h1 class="section-title">Platform Features</h1>
+        <p class="section-subtitle">
+            <span style="color: #00d4ff; font-weight: 600;">The only automatic trading platform officially partnered with major exchanges.</span><br><br>
+            Cutting-edge AI technology designed to maximize your trading potential with zero manual intervention.
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">AI-Powered Trading</h3>
+                <p class="feature-description">
+                    Our proprietary system deploys over a dozen specialized AI agents, each trained through advanced reinforcement learning and machine learning techniques. These agents work in concert to analyze market microstructure, identify arbitrage opportunities, and execute sophisticated trading strategies with institutional-grade precision.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Lightning Fast Execution</h3>
+                <p class="feature-description">
+                    Lightning-fast execution captures price movements in milliseconds, maximizing profits on micro-fluctuations that manual traders miss entirely. Our low-latency infrastructure processes thousands of trades per second across multiple exchanges simultaneously.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Risk Management</h3>
+                <p class="feature-description">
+                    Built-in risk controls and stop-loss mechanisms protect your capital while maximizing returns.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Real-Time Analytics</h3>
+                <p class="feature-description">
+                    Comprehensive dashboards provide instant insights into your portfolio performance and trading activity.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Bank-Level Security</h3>
+                <p class="feature-description">
+                    Enterprise-grade encryption and security protocols keep your funds and data completely protected.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3 class="feature-title">Multi-Exchange Support</h3>
+                <p class="feature-description">
+                    Connect to major crypto exchanges seamlessly and trade across multiple platforms from one interface.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="section" style="background: rgba(15, 15, 30, 0.5);">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">
+            Get started in minutes with our simple three-step process
+        </p>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3 class="step-title">Join MX1 & Connect Your Exchange</h3>
+                    <p class="step-description">
+                        Sign up with MX1 and link your existing crypto exchange account, or create a new account with one of our supported exchanges. We support all major exchanges including Binance, Coinbase, Kraken, OKX, Bybit, and more. Securely connect using API keys - <strong style="color: #00d4ff;">your funds never leave your exchange, we only execute trades on your behalf.</strong>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3 class="step-title">Set Your Parameters</h3>
+                    <p class="step-description">
+                        Choose your risk level, investment amount, and trading preferences. Our AI will automatically optimize your strategy based on your goals. You can start with as little as $1,000 or scale up to institutional-level trading.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3 class="step-title">Let AI Trade for You</h3>
+                    <p class="step-description">
+                        Sit back and watch your portfolio grow. Mariah AI monitors markets 24/7, executing trades at optimal moments. Track your performance in real-time through our dashboard and withdraw profits anytime. It's completely touchless.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Key Benefits Section -->
+    <section class="section">
+        <h2 class="section-title">Key Benefits</h2>
+        <p class="section-subtitle">
+            Why thousands of traders choose Mariah AI for their crypto trading
+        </p>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-stat">1-2%</div>
+                <div class="benefit-label">Daily Returns</div>
+                <p class="benefit-description">
+                    Consistent daily returns that compound into significant monthly gains
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-stat">70-75%</div>
+                <div class="benefit-label">Win Rate</div>
+                <p class="benefit-description">
+                    Industry-leading success rate backed by proven trading algorithms
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-stat">24/7</div>
+                <div class="benefit-label">Always Active</div>
+                <p class="benefit-description">
+                    Never miss opportunities - AI trades around the clock
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-stat">100%</div>
+                <div class="benefit-label">Touchless</div>
+                <p class="benefit-description">
+                    Zero manual work required - completely automated trading
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-stat">$1B+</div>
+                <div class="benefit-label">Trading Volume</div>
+                <p class="benefit-description">
+                    Over one billion in successful trades executed
+                </p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-stat">1,000+</div>
+                <div class="benefit-label">Active Users</div>
+                <p class="benefit-description">
+                    Join a growing community of successful traders
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Ready to Start Trading?</h2>
+        <p class="cta-subtitle">
+            Join the waitlist and be among the first to access Mariah AI
+        </p>
+        <a href="waitlist.html" class="cta-button">Join Waiting List</a>
+    </section>
+</body>
+</html>
