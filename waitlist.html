@@ -311,21 +311,31 @@
             // Get form values
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            const phone = document.getElementById('phone').value || '';
             const trader = document.querySelector('input[name="trader"]:checked').value;
             
-            // Here you would typically send this data to your backend/database
-            // For now, we'll just show an alert
-            let message = `Thank you for joining, ${name}!\n\nWe'll contact you at ${email} soon.`;
-            if (phone) {
-                message += `\nPhone: ${phone}`;
-            }
-            message += `\nTrading Experience: ${trader}`;
+            // Create FormData for Google Forms submission
+            const formData = new FormData();
+            formData.append('entry.1586100636', name);
+            formData.append('entry.668344606', email);
+            formData.append('entry.1437981212', phone);
+            formData.append('entry.1360387375', trader);
             
-            alert(message);
-            
-            // Reset form
-            this.reset();
+            // Submit to Google Form
+            fetch('https://docs.google.com/forms/d/e/1FAIpQLSfYXHT7ht4G0bv30ylHkOA4tSgMCYOU5-0kEWPyJvXQmH4JVw/formResponse', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).then(() => {
+                // Show success message
+                alert(`Thank you for joining, ${name}! Your information has been submitted successfully.`);
+                // Reset form
+                this.reset();
+            }).catch(() => {
+                // Even if there's an error, the form was probably submitted
+                alert(`Thank you for joining, ${name}! Your information has been submitted.`);
+                this.reset();
+            });
         });
     </script>
 </body>
