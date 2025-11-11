@@ -234,13 +234,13 @@
         </p>
         
         <div class="form-container">
-            <form id="waitlistForm">
+            <form id="waitlistForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfYXHT7ht4G0bv30ylHkOA4tSgMCYOU5-0kEWPyJvXQmH4JVw/formResponse" target="hidden_iframe" method="POST">
                 <div class="form-group">
                     <label class="form-label" for="name">Full Name</label>
                     <input 
                         type="text" 
                         id="name" 
-                        name="name" 
+                        name="entry.1586100636" 
                         class="form-input" 
                         placeholder="Enter your full name"
                         required
@@ -252,7 +252,7 @@
                     <input 
                         type="email" 
                         id="email" 
-                        name="email" 
+                        name="entry.668344606" 
                         class="form-input" 
                         placeholder="your.email@example.com"
                         required
@@ -264,7 +264,7 @@
                     <input 
                         type="tel" 
                         id="phone" 
-                        name="phone" 
+                        name="entry.1437981212" 
                         class="form-input" 
                         placeholder="+1 (555) 123-4567"
                     >
@@ -277,8 +277,8 @@
                             <input 
                                 type="radio" 
                                 id="trader-yes" 
-                                name="trader" 
-                                value="yes"
+                                name="entry.1360387375" 
+                                value="Yes"
                                 required
                             >
                             <label for="trader-yes">Yes</label>
@@ -287,8 +287,8 @@
                             <input 
                                 type="radio" 
                                 id="trader-no" 
-                                name="trader" 
-                                value="no"
+                                name="entry.1360387375" 
+                                value="No"
                             >
                             <label for="trader-no">No</label>
                         </div>
@@ -299,48 +299,21 @@
                     Submit
                 </button>
             </form>
+            
+            <!-- Hidden iframe for form submission -->
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
         </div>
         
         <a href="index.html" class="back-link">← Back to Home</a>
     </div>
     
     <script>
-        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value || '';
-            const trader = document.querySelector('input[name="trader"]:checked').value;
-            
-            // Create URL-encoded data for Google Forms
-            const params = new URLSearchParams();
-            params.append('entry.1586100636', name);
-            params.append('entry.668344606', email);
-            if (phone) {
-                params.append('entry.1437981212', phone);
-            }
-            params.append('entry.1360387375', trader);
-            
-            // Submit to Google Form
-            fetch('https://docs.google.com/forms/d/e/1FAIpQLSfYXHT7ht4G0bv30ylHkOA4tSgMCYOU5-0kEWPyJvXQmH4JVw/formResponse', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: params.toString()
-            }).then(() => {
-                // Show success message
-                alert(`Thank you for joining, ${name}! Your information has been submitted successfully.`);
-                // Reset form
-                this.reset();
-            }).catch((error) => {
-                // Even with no-cors, the form is usually submitted successfully
-                alert(`Thank you for joining, ${name}! Your information has been submitted.`);
-                this.reset();
-            });
+        // Handle form submission success
+        document.getElementById('waitlistForm').addEventListener('submit', function() {
+            setTimeout(function() {
+                alert('Thank you for joining! Your information has been submitted successfully.');
+                document.getElementById('waitlistForm').reset();
+            }, 500);
         });
     </script>
 </body>
