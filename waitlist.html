@@ -171,6 +171,7 @@
         .submit-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
         
         .back-link {
@@ -332,7 +333,7 @@
     </div>
     
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxlayMgU_WdXhmAaipuAXbV5ZpR1kqST5p1FxIHUQb5evniKL2_bKq0_4CAWo3RsO9N/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxyMRY9gvU3PGTKVocgSraiOcjudv-rt0IQ3HkHA57H2aC2h-9vp5PczRCjM5um4HDekg/exec';
         const form = document.getElementById('waitlistForm');
         const submitBtn = document.getElementById('submitBtn');
         const statusMessage = document.getElementById('statusMessage');
@@ -353,10 +354,10 @@
             // Send to Google Apps Script
             fetch(scriptURL, {
                 method: 'POST',
-                body: formData,
-                mode: 'no-cors' // Important for Google Apps Script
+                body: formData
             })
-            .then(() => {
+            .then(response => response.text())
+            .then(data => {
                 // Show success message
                 statusMessage.textContent = '✓ Thank you for joining! Your information has been submitted successfully.';
                 statusMessage.className = 'status-message success';
@@ -373,7 +374,7 @@
                 console.error('Error:', error);
                 
                 // Show error message
-                statusMessage.textContent = '✗ There was an error submitting your information. Please try again.';
+                statusMessage.textContent = '✗ There was an error. Please try again or contact support.';
                 statusMessage.className = 'status-message error';
                 statusMessage.style.display = 'block';
                 
